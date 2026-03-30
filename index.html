@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gülbilge & Samet | Düğün Davetiyesi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-cream: #fdfbf7;
+            --sakura-pink: #f4e8e8;
+            --rose-gold: #c2958d;
+            --sage-green: #6e8268;
+            --text-dark: #3a3a3a;
+            --text-light: #7a7a7a;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+
+        /* --- INTRO VİDEO KATMANI --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-cream);
+            z-index: 9999; /* Sayfadaki her şeyin üstünde */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 1.5s ease; /* Yavaşça kaybolma efekti */
+        }
+
+        #intro-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Başlangıçta video görünmez, sadece yazı görünür */
+            transition: opacity 0.5s ease;
+        }
+
+        #play-hint {
+            position: relative;
+            z-index: 10000;
+            text-align: center;
+            color: var(--rose-gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- HERO / KARŞILAMA BÖLÜMÜ --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            background-color: var(--bg-cream); /* Video yüklenene kadar arkaplan rengi */
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin: 0;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .ampersand { font-style: italic; font-weight: 400; color: #fcebeb; }
+        .hero-parents { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; margin: 20px 0 30px; opacity: 0.9; }
+        .hero-date { font-size: 2rem; font-weight: 400; margin: 20px 0; display: block; }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            color: #fff;
+            font-size: 2rem;
+            animation: bounceScroll 2s infinite;
+        }
+
+        @keyframes bounceScroll {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* --- İÇERİK & KARTLAR --- */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 60px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: var(--rose-gold);
+            opacity: 0.3;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+            border: 1px solid rgba(194, 149, 141, 0.2);
+            position: relative;
+            text-align: center;
+        }
+
+        .card-timeline::before {
+            content: '🌸';
+            position: absolute;
+            left: -42px;
+            top: 40px;
+            font-size: 1.2rem;
+            background: var(--bg-cream);
+            padding: 5px 0;
+        }
+
+        .card-title { font-size: 2.2rem; color: var(--rose-gold); margin-top: 0; margin-bottom: 10px; }
+        .nikah-card .card-title { color: var(--sage-green); }
+        
+        .card-subtitle { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 25px; }
+        .card-details { font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 25px; }
+        
+        .map-frame { width: 100%; height: 250px; border: none; border-radius: 8px; margin-bottom: 25px; background: #eee; }
+        
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--rose-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-solid { background: var(--rose-gold); color: #fff; }
+        .btn-solid:hover { background: #ab7f77; }
+        .btn-outline { background: transparent; color: var(--rose-gold); }
+        .btn-outline:hover { background: var(--sakura-pink); }
+
+        /* Final Kapanış Kartı (Sadeleştirilmiş) */
+        .final-card {
+            text-align: center;
+            padding: 50px 30px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .final-text h3 { font-size: 3rem; margin: 0 0 10px 0; color: var(--text-dark); }
+        .final-text p { margin: 5px 0; color: var(--text-light); }
+        .final-heart { color: var(--rose-gold); font-size: 1.5rem; }
+
+        @media (max-width: 600px) {
+            .timeline { padding-left: 20px; }
+            .timeline::before { left: 5px; }
+            .card-timeline::before { left: -26px; font-size: 1rem; }
+            .card { padding: 30px 20px; }
+            .final-text h3 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div id="play-hint">
+            <span style="font-size: 3rem;">🌸</span><br>
+            Davetiyeyi görüntülemek için tıklayın
+        </div>
+        <video id="intro-video" playsinline>
+            <source src="introvideo_1.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <section class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="sakura_bg_video.mp4" type="video/mp4">
+        </video>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Gülbilge <span class="ampersand">&</span> Samet</h1>
+            <div class="hero-parents">Aysun & Ali Murat Güven • Ayşen & Arif Yurtseven</div>
+            <div style="font-size: 2rem; color: #fcebeb; margin: 10px 0;">❦</div>
+            <span class="serif-text hero-date">20 Haziran 2026</span>
+            <p style="font-size: 1.1rem; font-weight: 300; font-style: italic;">
+                Bu özel günümüzde sizi aramızda<br>görmekten mutluluk duyarız.
+            </p>
+        </div>
+        <div class="scroll-down">⌄</div>
+    </section>
+
+    <div class="container">
+        
+        <div class="timeline">
+
+            <div class="card card-timeline nikah-card">
+                <h2 class="card-title">NİKAH</h2>
+                <div class="card-subtitle">Official Ceremony</div>
+                <div class="card-details">
+                    <strong>14 Haziran 2026, Pazar</strong><br>
+                    Saat: 14:45<br><br>
+                    <strong>Üsküdar Nikah Sarayı</strong><br>
+                    Mimar Sinan, Çavuşdere Cd. No: 35<br>34672 Üsküdar / İstanbul
+                </div>
+                <div class="btn-group">
+                     <a class="btn btn-outline" style="border-color: var(--sage-green); color: var(--sage-green);" href="https://maps.app.goo.gl/orneklink2" target="_blank">Yol Tarifi Al</a>
+                </div>
+            </div>
+            
+            <div class="card card-timeline">
+                <h2 class="card-title">DÜĞÜN</h2>
+                <div class="card-subtitle">Wedding Ceremony & Celebration</div>
+                <div class="card-details">
+                    <strong>20 Haziran 2026, Cumartesi</strong><br>
+                    19:00 - 24:00<br><br>
+                    <strong>Uçar Garden Bosphorus</strong><br>
+                    Beylerbeyi, Şemsi Efendi Sk. No:28<br>34676 Üsküdar / İstanbul
+                </div>
+                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.684179612338!2d29.0435973!3d41.043063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7af1e10222f%3A0xc3f60e9ecdbbb6d8!2zVcOnYXIgR2FyZGVuIEJvc3Bob3J1cw!5e0!3m2!1str!2str!4v1716300000000!5m2!1str!2str" loading="lazy" title="Uçar Garden Bosphorus Harita"></iframe>
+                <div class="btn-group">
+                    <button class="btn btn-solid">Takvime Ekle</button>
+                    <a class="btn btn-outline" href="https://maps.app.goo.gl/orneklink1" target="_blank">Yol Tarifi Al</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card final-card">
+            <div class="final-text">
+                <h3 class="serif-text">Gülbilge<br><span class="ampersand" style="color: var(--rose-gold); font-size: 2.5rem;">&</span> Samet</h3>
+                <p><strong>20 Haziran 2026</strong></p>
+                <p style="margin-top: 15px; font-style: italic;">Sevgiyle Bekliyoruz <span class="final-heart">♥</span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const introOverlay = document.getElementById('intro-overlay');
+            const introVideo = document.getElementById('intro-video');
+            const playHint = document.getElementById('play-hint');
+
+            // 1. Kullanıcı ekrana tıkladığında
+            introOverlay.addEventListener('click', function() {
+                // Tıklama yazısını gizle
+                playHint.style.display = 'none';
+                
+                // Videoyu görünür yap ve oynat
+                introVideo.style.opacity = '1';
+                introVideo.play().catch(error => {
+                    console.log("Video oynatma başlatılamadı:", error);
+                    // Tarayıcı engellerse direkt geçiş yap
+                    fadeAndRemoveOverlay();
+                });
+            });
+
+            // 2. Video sona erdiğinde
+            introVideo.addEventListener('ended', function() {
+                fadeAndRemoveOverlay();
+            });
+
+            // Katmanı yumuşakça silen fonksiyon
+            function fadeAndRemoveOverlay() {
+                introOverlay.style.opacity = '0'; // CSS transition ile 1.5 saniyede şeffaflaşır
+                
+                // Animasyon bitince elementi tamamen sayfadan kaldır (tıklamayı engellememesi için)
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                }, 1500); 
+            }
+        });
+    </script>
+</body>
+</html>
